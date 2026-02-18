@@ -147,7 +147,7 @@ async function fetchAndParseXlsx() {
 
             // Get Image URL from column 6
             let rawImg = getCellValue(6).trim();
-            console.log(`Row ${rowNumber}: Raw Image Cell Value: "${rawImg}"`);
+            // console.log(`Row ${rowNumber}: Raw Image Cell Value: "${rawImg}"`);
 
             let imgUrl = rawImg;
 
@@ -156,11 +156,11 @@ async function fetchAndParseXlsx() {
                 if (imgUrl.match(/^https?:\/\//i)) {
                     // It's a web URL, check if drive link
                     imgUrl = convertDriveLink(imgUrl);
-                    console.log(`Row ${rowNumber}: Converted URL: "${imgUrl}"`);
+                    // console.log(`Row ${rowNumber}: Converted URL: "${imgUrl}"`);
                 } else if (!imgUrl.includes('/')) {
                     // Assume local file if no slashes
                     imgUrl = `images/${imgUrl}`;
-                    console.log(`Row ${rowNumber}: Local Path: "${imgUrl}"`);
+                    // console.log(`Row ${rowNumber}: Local Path: "${imgUrl}"`);
                 }
             }
 
@@ -221,7 +221,7 @@ async function fetchAndParseXlsx() {
 
             // Image
             if (event.imageUrl && event.imageUrl !== 'images/') {
-                console.log(`Loading image for ${event.eventName}: ${event.imageUrl}`); // Debug log
+                // console.log(`Loading image for ${event.eventName}: ${event.imageUrl}`); // Debug log
                 // Add error handling for image
                 const img = document.createElement('img');
                 img.src = event.imageUrl;
