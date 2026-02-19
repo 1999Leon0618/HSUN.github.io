@@ -1,15 +1,161 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="0; url=./kpop/">
-    <script>
-        window.location.href = "./kpop/";
-    </script>
+    <title>HSUN's Journey with VIVIZ (GFRIEND) | 🐰丁恩妃</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- ExcelJS Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Sans+TC:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-    <p>正在前往 <a href="./kpop/">HSUN 追星日記</a>...</p>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo">HSUN</a>
+            <div class="nav-links">
+                <a href="#dashboard">總覽</a>
+                <a href="#records">線下紀錄</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Bento Grid Dashboard -->
+    <div id="dashboard" class="container bento-wrapper" style="padding-top: 100px; padding-bottom: 50px;">
+        <div class="bento-grid">
+
+            <!-- Card 1: Main Profile & Hero (Large, 2x2) -->
+            <div class="bento-item profile-main">
+                <div class="profile-content-flex">
+                    <img src="https://drive.google.com/file/d/1p_i8A9mwNdUOTviWR5wNoTXqi08jrHPN/view?usp=drive_link"
+                        alt="HSUN Profile" class="bento-avatar">
+                    <div class="profile-text">
+                        <h1 class="bento-title">HSUN 追星日記</h1>
+                        <p class="bento-subtitle">My Journey with VIVIZ (GFRIEND)</p>
+                        <div class="tags">
+                            <span class="tag">1999</span>
+                            <span class="tag">Taichung</span>
+                            <span class="tag">INTJ</span>
+                        </div>
+                        <p class="bio-text">記錄所有與小女友與 VIVIZ 的相遇。<br>BUDDY / Na.V</p>
+                        <div class="socials-bento">
+                            <a href="https://www.threads.com/@ku_hsun" target="_blank" class="social-btn"><i
+                                    class="fas fa-at"></i> Threads</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Main Bias (Tall or Wide) -->
+            <div class="bento-item bias-main">
+                <div class="bento-header">
+                    <h3>本命推 🐰</h3>
+                </div>
+                <div class="bias-content">
+                    <div class="member-highlight">
+                        <span class="member-name">Eunha 銀河</span>
+                        <span class="member-role">Vocal</span>
+                    </div>
+                    <p class="bias-quote">"She is the galaxy."</p>
+                </div>
+            </div>
+
+            <!-- Card 3: Sub Biases -->
+            <div class="bento-item bias-sub">
+                <div class="bento-header">
+                    <h3>副擔 💖</h3>
+                </div>
+                <ul class="member-list">
+                    <li>所願 (Sowon)</li>
+                    <li>信飛 (SinB)</li>
+                </ul>
+            </div>
+
+            <!-- Card 4: Favorites (Music) - Expanded -->
+            <div class="bento-item music-fav">
+                <div class="bento-header">
+                    <h3>音樂取向 🎵</h3>
+                </div>
+                <div class="music-list-grid">
+                    <div class="music-category">
+                        <h4>Title Tracks</h4>
+                        <ul>
+                            <li>Navillera</li>
+                            <li>Love Whisper</li>
+                            <li>Time for the moon night</li>
+                            <li>Crossroads</li>
+                            <li>MAGO</li>
+                            <li>BOP BOP! (VIVIZ)</li>
+                            <li>MANIAC (VIVIZ)</li>
+                        </ul>
+                    </div>
+                    <div class="music-category">
+                        <h4>B-Sides</h4>
+                        <ul>
+                            <li>Labyrinth</li>
+                            <li>Here We Are</li>
+                            <li>Dreamcatcher</li>
+                            <li>Love Bug</li>
+                            <li>You are not alone</li>
+                            <li>Only 1</li>
+                            <li>RAINBOW</li>
+                            <li>Vacation</li>
+                        </ul>
+                    </div>
+                    <div class="music-category">
+                        <h4>OST</h4>
+                        <ul>
+                            <li>Tell me this is real</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="disclaimer-text">* 順序與喜歡程度無關</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Offline Records Section -->
+    <section id="records" class="schedule">
+        <div class="container">
+            <h2 class="section-title">線下紀錄 💖</h2>
+
+            <!-- Offline Records Section -->
+            <!-- Data is loaded from Google Sheets automatically -->
+
+            <div class="timeline" id="timeline-container">
+                <!-- Timeline items will be loaded dynamically via script.js -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <p>請上傳您的 Excel (*.xlsx) 檔案以檢視紀錄 📂</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="connect">
+        <div class="container">
+            <p>&copy; 2026 HSUN. Created for the Love of K-Pop.</p>
+            <p>以上內容參考其他Buddy如有異常都是我的錯，先在這邊道歉</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
