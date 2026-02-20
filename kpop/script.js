@@ -79,6 +79,11 @@ async function fetchAndParseXlsx() {
 
         timelineContainer.innerHTML = '<div class="timeline-item"><div class="timeline-content"><p>Loading records from Google Sheets...</p></div></div>';
 
+        const musicContainer = document.getElementById('music-list-container');
+        if (musicContainer) {
+            musicContainer.innerHTML = '<p style="color:#aaa; font-style:italic;">Loading favorites from Google Sheets...</p>';
+        }
+
         const response = await fetch(xlsxUrl);
         if (!response.ok) throw new Error('Network response was not ok: ' + response.statusText);
 
@@ -86,7 +91,78 @@ async function fetchAndParseXlsx() {
         const workbook = new ExcelJS.Workbook();
         await workbook.xlsx.load(buffer);
 
-        const worksheet = workbook.worksheets[0]; // Assume data is in first sheet
+        // --- 1. Load Music Favorites (Sheet1) ---
+        if (musicContainer && workbook.worksheets.length > 0) {
+            const musicSheet = workbook.worksheets[0];
+            const categories = {};
+            const musicData = {};
+
+            // Read headers from row 1
+            const headerRow = musicSheet.getRow(1);
+            headerRow.eachCell((cell, colNumber) => {
+                const catName = cell.value ? cell.value.toString().trim() : '';
+                if (catName) {
+                    categories[colNumber] = catName;
+                    musicData[colNumber] = [];
+                }
+            });
+
+            // Read data (skip row 1)
+            musicSheet.eachRow((row, rowNumber) => {
+                if (rowNumber === 1) return;
+                row.eachCell((cell, colNumber) => {
+                    if (categories[colNumber] && cell.value) {
+                        const val = cell.value;
+                        let songName = '';
+                        // robustly extract string
+                        if (typeof val === 'object') {
+                            if (val.richText) {
+                                songName = val.richText.map(t => t.text).join('').trim();
+                            } else if (val.text) {
+                                songName = val.text.trim();
+                            } else if (val.result) {
+                                songName = String(val.result).trim();
+                            }
+                        } else {
+                            songName = String(val).trim();
+                        }
+
+                        // remove leading bullets if user pasted them
+                        songName = songName.replace(/^[-•*]*\s*/, '');
+
+                        if (songName !== '') {
+                            musicData[colNumber].push(songName);
+                        }
+                    }
+                });
+            });
+
+            // Render Music HTML
+            let musicHtml = '';
+            Object.keys(categories).forEach(colIdx => {
+                const catName = categories[colIdx];
+                const songs = musicData[colIdx];
+                if (songs.length > 0) {
+                    musicHtml += `<div class="music-category">
+                        <h4>${catName}</h4>
+                        <ul>`;
+                    songs.forEach(song => {
+                        musicHtml += `<li>${song}</li>`;
+                    });
+                    musicHtml += `</ul></div>`;
+                }
+            });
+
+            if (musicHtml) {
+                musicContainer.innerHTML = musicHtml;
+            } else {
+                musicContainer.innerHTML = '<p style="color:#aaa; font-style:italic;">No music data found in Sheet1.</p>';
+            }
+        }
+
+        // --- 2. Load Offline Records (Sheet2) ---
+        // We use worksheets[1] for Sheet2. If Sheet2 doesn't exist, it falls back to parsing Sheet1 just in case, or throws an error gracefully.
+        const worksheet = workbook.worksheets.length > 1 ? workbook.worksheets[1] : workbook.worksheets[0];
         const events = [];
 
         // Iterate rows (skip header, so start from row 2)
